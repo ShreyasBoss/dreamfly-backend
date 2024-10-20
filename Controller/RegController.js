@@ -22,7 +22,7 @@ exports.createUser = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
-    res.status(201).json({ id: savedUser._id, name: savedUser.name, email: savedUser.email });
+    res.status(201).json(savedUser);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
