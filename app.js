@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use('/api',RegRoute);
+app.use('/api/user',RegRoute);
 
 app.use('/api/posts',BlogsRoute)
 

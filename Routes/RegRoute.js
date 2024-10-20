@@ -1,65 +1,24 @@
-const{createUser,getUser} = require('../Controller/RegController');
-const{login} = require('../Controller/loginController')
-const route = require('express').Router();
-const{userValidation} = require('../helpers/validation/user.validation');
-const auth = require('../helpers/JWT/auth');
+// Routes/userRoutes.js
+const express = require('express');
+const router = express.Router();
+const userController = require('../Controller/RegController');
 
-route.post('/reg',userValidation,async (req,res)=>{
+// Create a new user
+router.post('/', userController.createUser);
 
-    try{
-            const result = await createUser(req.body);
-            if(result.errors){
-                res.status(400).send({errors:true, message:result.message})
-            }
-            else{
-                res.status(200).send({errors:false, data:result.data})
-            }
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
+// Get all users
+router.get('/', userController.getAllUsers);
 
-})
+// Get a user by ID
+router.get('/:id', userController.getUserById);
 
-route.post('/login',async (req,res)=>{
+// Update a user
+router.put('/:id', userController.updateUser);
 
-    try{
-            const result = await login(req.body);
-            if(result.errors){
-                res.status(400).send({errors:true, message:result.message})
-            }
-            else{
-                res.status(200).send({errors:false, data:result.data,token:result.token})
-            }
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
+// Delete a user
+router.delete('/:id', userController.deleteUser);
 
-})
+// Login a user
+router.post('/login', userController.loginUser);
 
-
-route.get('/reg', auth,async (req,res)=>{
-
-    try{
-            const result = await getUser();
-            if(result.errors){
-                res.status(400).send({errors:true, message:result.message})
-            }
-            else{
-                res.status(200).send({errors:false, data:result.data})
-            }
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
-
-})
-
-
-
-
-
-module.exports = route;
-
-
+module.exports = router;
