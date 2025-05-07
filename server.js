@@ -49,7 +49,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.post('/api/upload', upload.array('files', 10), (req, res) => {
   try {
     const files = req.files.map(file => ({
-      url: `http://localhost:${PORT}/uploads/${file.filename}`,
+      url: `https://dreamfly-backend.onrender.com/uploads/${file.filename}`,
       filename: file.filename
     }));
     res.json({ files });
